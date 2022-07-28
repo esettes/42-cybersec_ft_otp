@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  otp:
+    container_name: otp_container
+    image: docker_otp
+    volumes:
+      - ../src:/home
+    stdin_open: true
+    tty: true
