@@ -6,7 +6,7 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/07/29 17:40:14 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/02 00:07:00 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,8 @@ down:
 
 delete: down
 	docker rm -fv $(CONTAINER)
-	
+	docker rmi -f $(DOCKER_PATH) $(APPNAME)
+
 exec:
 	docker exec -it ${CONTAINER} /bin/sh -c bash
 
@@ -62,5 +63,5 @@ help:
 	@echo "[up] builds images and run containers"
 	@echo "[exec] execute container with bash"
 	@echo "[list] shows images and all containers with compose"
-	@echo "[down] stops containers and delete them and the images too"
+	@echo "[delete] stops and deletes containers and images"
 	@echo "[build] rebuilds the image"

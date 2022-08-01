@@ -5,6 +5,6 @@ services:
     container_name: otp_container
     image: docker_otp
     volumes:
-      - ../src:/home
+      - ../modules:/home
     stdin_open: true
     tty: true
