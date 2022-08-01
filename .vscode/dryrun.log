@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/iostancu/Desktop/cursus/cybersec/ft_otp'
+docker-compose -f ./docker/docker-compose.yml up -d
+docker exec -it otp_container /bin/sh -c bash
+make: Leaving directory `/Users/iostancu/Desktop/cursus/cybersec/ft_otp'
+ 
