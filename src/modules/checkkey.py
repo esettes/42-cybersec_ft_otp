@@ -1,15 +1,16 @@
 #!/usr/bin/python3.9
+import modules.stdmsg as msg
 
 def CheckValidKey(key):
 	formatCheck = CheckValidFormat(key)
 	lenCheck = CheckValidLenght(key)
 	if formatCheck and lenCheck:
-		print("Saving and encripting new key...")
+		msg.load_msg("Saving and encripting new key...")
 		return True
 	if lenCheck == False:
-		print ("Key must be at least for 64 charcters length")
+		msg.err_msg("The key " + key + " must be at least for 64 charcters length")
 	if formatCheck == False:
-		print ("Key must be formated to hexadecimal")
+		msg.err_msg("The key " + key + " must be formated to hexadecimal")
 	return False
 
 def CheckValidLenght(key):
@@ -21,10 +22,10 @@ def CheckValidLenght(key):
 def CheckValidFormat(key):
 	hexChars = set('0123456789abcdefABCDEF')
 	if all((c in hexChars) for c in key):
-		print('Key <' + key + '> is correct formatted')
+		#msg.load_msg('Key <' + key + '> is a correct hexadecimal format')
 		return True
 	else:
-		print('Key <' + key + '> is not correct formatted')
+		msg.err_msg('Key <' + key + '> is not correct formatted')
 		return False
 
 def EncryptKey(key):
