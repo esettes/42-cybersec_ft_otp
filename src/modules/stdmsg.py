@@ -5,3 +5,6 @@ def	err_msg(str):
 
 def load_msg(str):
 	print (bcol.GREY + str + bcol.ENDC)
+
+def	warn_msg(str):
+	print (bcol.WARN + "[WARNING]: " + bcol.ENDC + str)

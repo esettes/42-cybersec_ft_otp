@@ -1,5 +1,8 @@
 #!/usr/bin/python3.9
 import modules.stdmsg as msg
+import os.path
+
+keypath = "/home/modules/key/ft_opt.key"
 
 def CheckValidKey(key):
 	formatCheck = CheckValidFormat(key)
@@ -28,7 +31,28 @@ def CheckValidFormat(key):
 		msg.err_msg('Key <' + key + '> is not correct formatted')
 		return False
 
-def EncryptKey(key):
-	with open("ft_otp.key", "wb") as key_file:
-		key_file.write(key)
+def SaveKey(key):
+	if KeyExisting():
+		WriteKey(key)
+		print("Override key")
+	else:
+		print ("Abort key-gen")
+	return True
+
+def WriteKey(key):
+	with open(keypath, "wb") as key_file:
+		key_file.write(key.encode())
 		key_file.close()
+
+def KeyExisting():
+	if os.path.exists(keypath):
+		msg.warn_msg("Another key exist. This action will overwrite it and is irreversible. Are you sure you want to overwrite it? [y/n] : ")
+		usrInput = input("")
+		if usrInput == 'n' or usrInput == 'N':
+			print("cancel key-gen and return program")
+			return False
+		elif usrInput == 'y' or usrInput == 'Y':
+			return True
+		else:
+			print("Please write 'y' or 'n'")
+			KeyExisting()
