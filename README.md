@@ -30,11 +30,12 @@ Then we can create, run and execute the necessary container running:
 make
 ````
 
-After this we are in the root directory of a debian container. To find  and run 
+After this we are in the root directory of a debian container. To find and run 
 main program:
 
 ````bash
 cd home
+./totp_gen.py -rg "My super secret secret to convert to hexadecimal"
 ````
 
 ...
