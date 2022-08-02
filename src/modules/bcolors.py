@@ -1,6 +1,3 @@
-from distutils.log import WARN
-
-
 
 # B = Bright
 # L = Low

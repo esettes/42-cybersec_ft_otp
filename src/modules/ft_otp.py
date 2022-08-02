@@ -11,7 +11,6 @@ def	main(argv):
 
 def OTPgenerator(length) :
 
-	
 	OTP = ""
 	for i in range(length) :
 		OTP=OTP+str(random.choice(range(0,15)))
