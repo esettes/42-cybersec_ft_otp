@@ -3,7 +3,6 @@ import random, sys, time
 
 def	main(argv):
 
-	
 	if len(argv) > 1:
 		OTPgenerator(int(argv[1]))
 	else:

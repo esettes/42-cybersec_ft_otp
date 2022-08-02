@@ -5,8 +5,8 @@ from struct import pack, unpack
 from hmac import new
 from hashlib import sha1
 import sys, re, argparse
-from checkkey import CheckValidKey
-from hexconversion import ConvertToHex
+from modules.checkkey import CheckValidKey
+from modules.hexconversion import ConvertToHex
 
 def	main(argv):
 	parser = argparse.ArgumentParser(description="*** TOTP generator ***")

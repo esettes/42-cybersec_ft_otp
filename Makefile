@@ -6,7 +6,7 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/08/02 18:04:40 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/02 18:08:33 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ CONTAINER = otp_container
 COMPOSE	= ./docker/docker-compose.yml
 COMP_CMD = docker-compose ps -a 
 
-
-
 all:	up	exec
 
 list:
@@ -40,7 +38,6 @@ list:
 	@echo "${GREEN}Existing docker images: ${END}"
 	@docker images 
 	
-
 up:
 	docker-compose -f $(COMPOSE) up -d
 
@@ -52,7 +49,7 @@ down:
 
 delete: down
 	docker rm -fv $(CONTAINER)
-	docker rmi -f $(DOCKER_PATH) $(APPNAME)
+#docker rmi -f $(DOCKER_PATH) $(APPNAME)
 
 exec:
 	docker exec -it ${CONTAINER} /bin/sh -c bash
