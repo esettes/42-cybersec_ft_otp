@@ -6,7 +6,7 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/08/02 18:08:33 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/02 18:22:03 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,12 +49,13 @@ down:
 
 delete: down
 	docker rm -fv $(CONTAINER)
-#docker rmi -f $(DOCKER_PATH) $(APPNAME)
+	docker rmi -f $(DOCKER_PATH) $(APPNAME)
 
 exec:
 	docker exec -it ${CONTAINER} /bin/sh -c bash
 
 help:
+	@echo ""
 	@echo "${BLUE}GENERAL COMMANDS:\033[2;37m"
 	@echo "\t[ list ] \tShows images and all containers with compose."
 	@echo "\t[ make ] \tExecutes 'up' and 'exec'."
@@ -62,3 +63,8 @@ help:
 	@echo "\t[ exec ] \tExecutes container with bash."
 	@echo "\t[ delete ] \tStop and delete containers and images."
 	@echo "\t[ build ] \tBuild the image."
+	@echo ""
+	@echo "\tA normal workflow would be: [ make build ] + [ make ] "
+	@echo ""
+	@echo "\tThen you can [ make list ] to se all existing images and containers and"
+	@echo "\tto delete the images and containers related, execute [ make delete ] "
