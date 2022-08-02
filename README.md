@@ -40,4 +40,3 @@ cd home
 
 ...
 
-not finish
