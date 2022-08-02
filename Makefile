@@ -6,11 +6,11 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/08/02 00:07:00 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/02 18:04:40 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LILA	=\033[1;36m
+CYAN	=\033[1;36m
 BLUE	=\033[1;34m
 GREEN	=\033[2;32m
 YELLOW	=\033[1;33m
@@ -28,7 +28,7 @@ COMP_CMD = docker-compose ps -a
 all:	up	exec
 
 list:
-	@echo "${LILA}Current compose running containers:"
+	@echo "${CYAN}Current compose running containers:"
 	@echo "------------------------------"
 	@docker-compose -f $(COMPOSE) ps -a
 	@echo "------------------------------"
@@ -58,10 +58,10 @@ exec:
 	docker exec -it ${CONTAINER} /bin/sh -c bash
 
 help:
-	@echo "${LILA}GENERAL COMMANDS:\033[2;37m"
-	@echo "[make] executes 'up' and 'exec' builds main image, and run a container with compose and execute it with bash"
-	@echo "[up] builds images and run containers"
-	@echo "[exec] execute container with bash"
-	@echo "[list] shows images and all containers with compose"
-	@echo "[delete] stops and deletes containers and images"
-	@echo "[build] rebuilds the image"
+	@echo "${BLUE}GENERAL COMMANDS:\033[2;37m"
+	@echo "\t[ list ] \tShows images and all containers with compose."
+	@echo "\t[ make ] \tExecutes 'up' and 'exec'."
+	@echo "\t[ up ] \t\tBuilds images and run containers."
+	@echo "\t[ exec ] \tExecutes container with bash."
+	@echo "\t[ delete ] \tStop and delete containers and images."
+	@echo "\t[ build ] \tBuild the image."
