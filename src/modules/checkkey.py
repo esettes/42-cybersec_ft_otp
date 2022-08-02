@@ -1,4 +1,3 @@
-#!/usr/bin/python3.9
 import modules.stdmsg as msg
 import os.path
 

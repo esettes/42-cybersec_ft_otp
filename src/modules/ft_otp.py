@@ -2,15 +2,13 @@
 import random, sys, time
 
 def	main(argv):
-
 	if len(argv) > 1:
 		OTPgenerator(int(argv[1]))
 	else:
 		print("Need input")
 		return
 
-def OTPgenerator(length) :
-
+def OTPgenerator(length):
 	OTP = ""
 	for i in range(length) :
 		OTP=OTP+str(random.choice(range(0,15)))
