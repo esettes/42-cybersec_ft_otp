@@ -2,7 +2,6 @@ import modules.stdmsg as msg
 import os.path
 from modules.globvars import keypath
 
-
 def CheckValidKey(key):
 	formatCheck = CheckValidFormat(key)
 	lenCheck = CheckValidLenght(key)
@@ -34,7 +33,6 @@ def WriteKey(key):
 	try:
 		with open(keypath, "wb") as key_file:
 			key_file.write(key.encode())
-			key_file.close()
 	except Exception:
 		msg.err_msg("Fail to write key")
 		return

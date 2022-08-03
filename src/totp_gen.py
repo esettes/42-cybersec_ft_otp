@@ -7,6 +7,8 @@ from hashlib import sha1
 import sys, re, argparse
 from modules.checkkey import CheckValidKey, CreateNewKey, WriteKey
 from modules.hexconversion import ConvertToHex
+from modules.checkpsswd import RequireUnlockPsswd
+import logging
 
 def	main(argv):
 	keysave = ""
@@ -15,7 +17,7 @@ def	main(argv):
 	parser.add_argument('-rg','--readablegen', metavar='<key>', default=None, help="[ -rg <key> ] Recieves a string and formats it to hexadecimal.")
 	args = parser.parse_args()
 	if args.generate or args.readablegen:
-		if CreateNewKey():
+		if CreateNewKey() and RequireUnlockPsswd():
 			if args.generate != None and args.readablegen == None:
 				keysave = args.generate
 			if args.generate == None and args.readablegen != None:
