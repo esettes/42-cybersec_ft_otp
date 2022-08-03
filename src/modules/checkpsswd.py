@@ -1,7 +1,6 @@
 from modules.globvars import psswd
 import modules.stdmsg as msg
 from getpass import getpass
-import keyboard 
 
 def DecriptionPsswd():
 	with open(psswd) as p:
@@ -11,11 +10,8 @@ def DecriptionPsswd():
 
 def RequireUnlockPsswd():
 	usrPsswd = getpass("Password: ")
-	
 	mainPsswd = DecriptionPsswd()
 	print("Passwd in file: " +  mainPsswd)
-	if keyboard.is_pressed('c'):
-		print("C pressed !!!")
 	if usrPsswd == mainPsswd:
 		print ("Correct psswd, unlock")
 		return True

@@ -1,0 +1,42 @@
+from modules.globvars import keypath, psswd
+from cryptography.fernet import Fernet
+import modules.stdmsg as msg
+
+def CryptKey():
+	try:
+		with open(psswd, "rb") as mykey:
+			psswd = mykey.read()
+		k = Fernet(psswd)
+	except Exception:
+		msg.err_msg("Couldn't read password")
+		return False
+	try:
+		with open(keypath, 'rb') as o_file:
+			r_file = o_file.read()
+			crypt = k.encrypt(r_file)
+		with open(keypath, 'wb') as crypt_file:
+			crypt_file.write(crypt)
+	except Exception:
+		msg.err_msg("Couldn't encript key")
+		return False
+	return True
+
+def DecriptKey():
+	try:
+		with open(psswd, "rb") as mykey:
+			psswd = mykey.read()
+		k = Fernet(psswd)
+	except Exception:
+		msg.err_msg("Couldn't read password")
+		return False
+	try:
+		with open(keypath, 'rb') as o_file:
+			r_file = o_file.read()
+			decrypt = k.decrypt(r_file)
+			o_file.close()
+			with open(keypath, 'wb') as crypt_file:
+				crypt_file.write(decrypt)
+	except Exception:
+		msg.err_msg("Couldn't dencript key")
+		return False
+	return True
