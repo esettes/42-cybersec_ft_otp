@@ -1,7 +1,7 @@
 import modules.stdmsg as msg
 import os.path
+from modules.globvars import keypath
 
-keypath = "/home/modules/key/ft_opt.key"
 
 def CheckValidKey(key):
 	formatCheck = CheckValidFormat(key)
@@ -30,20 +30,16 @@ def CheckValidFormat(key):
 		msg.err_msg('Key <' + key + '> is not correct formatted')
 		return False
 
-def SaveKey(key):
-	if KeyExisting():
-		WriteKey(key)
-		print("Override key")
-	else:
-		print ("Abort key-gen")
-	return True
-
 def WriteKey(key):
-	with open(keypath, "wb") as key_file:
-		key_file.write(key.encode())
-		key_file.close()
+	try:
+		with open(keypath, "wb") as key_file:
+			key_file.write(key.encode())
+			key_file.close()
+	except Exception:
+		msg.err_msg("Fail to write key")
+		return
 
-def KeyExisting():
+def CreateNewKey():
 	if os.path.exists(keypath):
 		msg.warn_msg("Another key exist. This action will overwrite it and is irreversible. Are you sure you want to overwrite it? [y/n] : ")
 		usrInput = input("")
@@ -53,5 +49,5 @@ def KeyExisting():
 		elif usrInput == 'y' or usrInput == 'Y':
 			return True
 		else:
-			print("Please write 'y' or 'n'")
-			KeyExisting()
+			msg.err_msg("Please write 'y' or 'n'")
+			CreateNewKey()

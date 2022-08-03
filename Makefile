@@ -6,7 +6,7 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/08/02 18:22:03 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/02 21:03:30 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ down:
 delete: down
 	docker rm -fv $(CONTAINER)
 	docker rmi -f $(DOCKER_PATH) $(APPNAME)
+#Check why delete cause error 
 
 exec:
 	docker exec -it ${CONTAINER} /bin/sh -c bash
