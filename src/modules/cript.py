@@ -32,9 +32,15 @@ def DecriptKey(usrPsswd):
 	return True
 
 def MasterKeyPass(usrPsswd):
+	# Need to obtain bytes but not random -- it generate a random key
 	rndmBytes = os.urandom(16)
+
 	# Derivating key
 	kdf = PBKDF2HMAC (algorithm=hashes.SHA256(), length=32, salt=rndmBytes, iterations=3000,)
+	msg.debug_msg("kdf: ")
+	print(kdf)
 	key = base64.urlsafe_b64encode(kdf.derive(usrPsswd))
+	msg.debug_msg("kdf: ")
+	print(key)
 	fer = Fernet(key)
 	return fer

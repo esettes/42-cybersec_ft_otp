@@ -8,3 +8,9 @@ def load_msg(str):
 
 def	warn_msg(str):
 	print (bcol.WARN + "[WARNING]: " + bcol.ENDC + str)
+
+def success_msg(str):
+	print (bcol.GREEN_B + "[OK] " + bcol.ENDC + str)
+
+def debug_msg(str):
+	print(bcol.BACKGR + "[DEBUG] " + bcol.ENDC + str)

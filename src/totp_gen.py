@@ -5,9 +5,10 @@ from struct import pack, unpack
 from hmac import new
 from hashlib import sha1
 import sys, re, argparse
-from modules.checkkey import CheckValidKey, CreateNewKey, WriteKey
+from modules.checkkey import ConfirmCreateNewKey
 from modules.hexconversion import ConvertToHex
-from modules.checkpsswd import RequireUnlockPsswd
+from modules.workflow import ChangeMasterKey, ChangePassword
+import modules.stdmsg as msg
 import logging
 
 def	main(argv):
@@ -15,17 +16,23 @@ def	main(argv):
 	parser = argparse.ArgumentParser(description="*** TOTP generator ***")
 	parser.add_argument('-g','--generate', metavar='<key>', default=None, help="[ -g <key> ] Recieves an hexadecimal key of at least 64 characters.")
 	parser.add_argument('-rg','--readablegen', metavar='<key>', default=None, help="[ -rg <key> ] Recieves a string and formats it to hexadecimal.")
+	parser.add_argument('-p','--passwd', metavar='<psswd>', default=None, help="[ -rg <passwd> ] Change the program password.")
 	args = parser.parse_args()
 	if args.generate or args.readablegen:
-		if CreateNewKey() and RequireUnlockPsswd():
+		if ConfirmCreateNewKey():
 			if args.generate != None and args.readablegen == None:
 				keysave = args.generate
 			if args.generate == None and args.readablegen != None:
 				keysave = ConvertToHex(args.readablegen)
-			if CheckValidKey(keysave):
-				WriteKey(keysave)
+			if ChangeMasterKey(keysave):
+				msg.success_msg("Master key changed successfuly.")
 		else:
-			print("Abort key-gen")
+			msg.load_msg("Abort master key modification.")
+	if args.passwd:
+		if ChangePassword():
+			msg.success_msg("Password changed successfuly.")
+		else:
+			msg.load_msg("Abort password modification.")
 
 if __name__ == '__main__':
 	main(sys.argv)
