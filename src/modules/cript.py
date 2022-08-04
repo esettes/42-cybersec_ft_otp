@@ -1,19 +1,16 @@
 from modules.globvars import keypath, psswd
 from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import modules.stdmsg as msg
+import base64, os
 
-def CryptKey():
-	try:
-		with open(psswd, "rb") as mykey:
-			psswd = mykey.read()
-		k = Fernet(psswd)
-	except Exception:
-		msg.err_msg("Couldn't read password")
-		return False
+def CryptKey(usrPsswd):
+	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
 		with open(keypath, 'rb') as o_file:
 			r_file = o_file.read()
-			crypt = k.encrypt(r_file)
+			crypt = masterkeyPsswd.encrypt(r_file)
 		with open(keypath, 'wb') as crypt_file:
 			crypt_file.write(crypt)
 	except Exception:
@@ -21,22 +18,23 @@ def CryptKey():
 		return False
 	return True
 
-def DecriptKey():
-	try:
-		with open(psswd, "rb") as mykey:
-			psswd = mykey.read()
-		k = Fernet(psswd)
-	except Exception:
-		msg.err_msg("Couldn't read password")
-		return False
+def DecriptKey(usrPsswd):
+	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
 		with open(keypath, 'rb') as o_file:
 			r_file = o_file.read()
-			decrypt = k.decrypt(r_file)
-			o_file.close()
+			decrypt = masterkeyPsswd.decrypt(r_file)
 			with open(keypath, 'wb') as crypt_file:
 				crypt_file.write(decrypt)
 	except Exception:
-		msg.err_msg("Couldn't dencript key")
+		msg.err_msg("Couldn't decript key")
 		return False
 	return True
+
+def MasterKeyPass(usrPsswd):
+	rndmBytes = os.urandom(16)
+	# Derivating key
+	kdf = PBKDF2HMAC (algorithm=hashes.SHA256(), length=32, salt=rndmBytes, iterations=3000,)
+	key = base64.urlsafe_b64encode(kdf.derive(usrPsswd))
+	fer = Fernet(key)
+	return fer

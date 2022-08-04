@@ -35,7 +35,7 @@ main program:
 
 ````bash
 cd home
-./totp_gen.py -rg "My super secret secret to convert to hexadecimal"
+./totp_gen.py -rg "My super secret master secret key"
 ````
 
 ...
