@@ -6,7 +6,6 @@ def CheckValidKey(key):
 	formatCheck = CheckValidFormat(key)
 	lenCheck = CheckValidLenght(key)
 	if formatCheck and lenCheck:
-		msg.load_msg("Saving and encripting new key...")
 		return True
 	if lenCheck == False:
 		msg.err_msg("The key " + key + " must be at least for 64 charcters length")
@@ -23,7 +22,6 @@ def CheckValidLenght(key):
 def CheckValidFormat(key):
 	hexChars = set('0123456789abcdefABCDEF')
 	if all((c in hexChars) for c in key):
-		#msg.load_msg('Key <' + key + '> is a correct hexadecimal format')
 		return True
 	else:
 		msg.err_msg('Key <' + key + '> is not correct formatted')

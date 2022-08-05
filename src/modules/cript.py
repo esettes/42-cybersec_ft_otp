@@ -1,5 +1,4 @@
-from textwrap import fill
-from modules.globvars import keypath, psswd
+from modules.globvars import keypath
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -15,7 +14,7 @@ def CryptKey(usrPsswd):
 		with open(keypath, 'wb') as crypt_file:
 			crypt_file.write(crypt)
 	except Exception:
-		msg.err_msg("Couldn't encript key")
+		#msg.err_msg("Couldn't encript key")
 		return False
 	return True
 
@@ -28,7 +27,7 @@ def DecriptKey(usrPsswd):
 			with open(keypath, 'wb') as crypt_file:
 				crypt_file.write(decrypt)
 	except Exception:
-		msg.err_msg("Couldn't decript key")
+		#msg.err_msg("Couldn't decript key")
 		return False
 	return True
 
@@ -39,14 +38,10 @@ def MasterKeyPass(usrPsswd):
 		fillPsswd = usrPsswd.zfill(16 - psswdLen)
 	usrBytes = fillPsswd[:16]
 	print(usrBytes)
-	msg.debug_msg("last 16 bytes")
-	print(usrPsswd[:16])
+	msg.debug_msg("last 16 bytes", usrPsswd[:16])
 	# Derivating key
 	kdf = PBKDF2HMAC (algorithm=hashes.SHA256(), length=32, salt=usrBytes, iterations=1000,)
-	msg.debug_msg("kdf: ")
-	print(kdf)
 	key = base64.urlsafe_b64encode(kdf.derive(usrPsswd))
-	msg.debug_msg("kdf: ")
-	print(key)
+	msg.debug_msg("key: ", key)
 	fer = Fernet(key)
 	return fer

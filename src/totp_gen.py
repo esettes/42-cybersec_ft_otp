@@ -2,14 +2,13 @@
 
 from base64 import b32decode, b32encode
 from struct import pack, unpack
-from hmac import new
 from hashlib import sha1
-import sys, re, argparse
+import sys, argparse
 from modules.checkkey import ConfirmCreateNewKey
+
 from modules.hexconversion import ConvertToHex
-from modules.workflow import ChangeMasterKey, ChangePassword
+from modules.workflow import ChangeMasterKey, ChangePassword, ObtainTOTP
 import modules.stdmsg as msg
-import logging
 
 def	main(argv):
 	keysave = ""
@@ -17,6 +16,7 @@ def	main(argv):
 	parser.add_argument('-g','--generate', metavar='<key>', default=None, help="[ -g <key> ] Recieves an hexadecimal key of at least 64 characters.")
 	parser.add_argument('-rg','--readablegen', metavar='<key>', default=None, help="[ -rg <key> ] Recieves a string and formats it to hexadecimal.")
 	parser.add_argument('-p','--passwd', action='store_true', help="[ -p ] Change the program password.")
+	parser.add_argument('-k','--key', metavar='<key>', default=None, help="[ -k <key> ] Generates a new temporaly password.")
 	args = parser.parse_args()
 	if args.generate or args.readablegen:
 		if ConfirmCreateNewKey():
@@ -33,6 +33,8 @@ def	main(argv):
 			msg.success_msg("Password changed successfuly.")
 		else:
 			msg.load_msg("Abort password modification.")
+	if args.key != None and args.readablegen == None and args.generate == None:
+		ObtainTOTP(args.key)
 
 if __name__ == '__main__':
 	main(sys.argv)
