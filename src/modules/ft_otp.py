@@ -1,14 +1,7 @@
 #!/usr/bin/python3.9
 import hashlib
-import random, sys, time, math, hmac
+import random, time, math, hmac
 import modules.stdmsg as msg
-
-def	main(argv):
-	if len(argv) > 1:
-		OTPgenerator(int(argv[1]))
-	else:
-		print("Need input")
-		return
 
 def OTPgenerator(length):
 	OTP = ""

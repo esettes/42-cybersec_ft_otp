@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import modules.stdmsg as msg
-import base64, os
+import base64
 
 def CryptKey(usrPsswd):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
