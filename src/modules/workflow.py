@@ -1,5 +1,5 @@
 from modules.globvars import keypath
-from modules.checkpsswd import RequirePsswdForKey, NewPsswd
+from modules.checkpsswd import NewPsswd
 import modules.stdmsg as msg
 from modules.cript import CryptKey, DecriptKey
 from modules.checkkey import CheckValidKey, WriteKey

@@ -16,7 +16,7 @@ def	main(argv):
 	parser = argparse.ArgumentParser(description="*** TOTP generator ***")
 	parser.add_argument('-g','--generate', metavar='<key>', default=None, help="[ -g <key> ] Recieves an hexadecimal key of at least 64 characters.")
 	parser.add_argument('-rg','--readablegen', metavar='<key>', default=None, help="[ -rg <key> ] Recieves a string and formats it to hexadecimal.")
-	parser.add_argument('-p','--passwd', metavar='<psswd>', default=None, help="[ -rg <passwd> ] Change the program password.")
+	parser.add_argument('-p','--passwd', action='store_true', help="[ -p ] Change the program password.")
 	args = parser.parse_args()
 	if args.generate or args.readablegen:
 		if ConfirmCreateNewKey():
