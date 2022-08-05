@@ -8,10 +8,12 @@ from os.path import exists
 
 def ChangePassword():
 	usrPsswd = getpass("Password: ")
-	if DecriptKey(usrPsswd):
+	print ("pswd in ChangePassword: " )
+	print(usrPsswd)
+	if DecriptKey(usrPsswd.encode()):
 		newPsswd = NewPsswd()
 		if newPsswd != None:
-			CryptKey(usrPsswd)
+			CryptKey(newPsswd.encode())
 			return True
 	elif usrPsswd == 'c' or usrPsswd == 'C':
 		return False

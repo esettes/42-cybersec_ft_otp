@@ -39,11 +39,13 @@ def MasterKeyPass(usrPsswd):
 		fillPsswd = usrPsswd.zfill(16 - psswdLen)
 	usrBytes = fillPsswd[:16]
 	print(usrBytes)
+	msg.debug_msg("last 16 bytes")
+	print(usrPsswd[:16])
 	# Derivating key
 	kdf = PBKDF2HMAC (algorithm=hashes.SHA256(), length=32, salt=usrBytes, iterations=1000,)
 	msg.debug_msg("kdf: ")
 	print(kdf)
-	key = base64.urlsafe_b64encode(kdf.derive(usrBytes))
+	key = base64.urlsafe_b64encode(kdf.derive(usrPsswd))
 	msg.debug_msg("kdf: ")
 	print(key)
 	fer = Fernet(key)
