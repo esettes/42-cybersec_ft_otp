@@ -18,34 +18,42 @@ END		=\033[1;37m
 
 DOCKER_PATH = ./docker/build/Dockerfile
 
+OS	:=	$(shell uname -s) 
+
 APPNAME = docker_otp:latest
 CONTAINER = otp_container
-COMPOSE	= ./docker/docker-compose.yml
-COMP_CMD = docker-compose ps -a 
 
 all:	up	exec
+
+ifeq  ($(OS), Darwin)
+COMP_CMD = docker-compose
+COMPOSE = ./docker/docker-compose.yml
+else
+COMP_CMD = docker compose
+COMPOSE = ./docker/docker-compose.yml
+endif
 
 list:
 	@echo "${CYAN}Current compose running containers:"
 	@echo "------------------------------"
-	@docker-compose -f $(COMPOSE) ps -a
+	$(COMP_CMD) -f $(COMPOSE) ps -a
 	@echo "------------------------------"
 	@echo "${BLUE}Current compose images:"
 	@echo "----------------------------------------------"
-	@docker-compose -f $(COMPOSE) images
+	@$(COMP_CMD) -f $(COMPOSE) images
 	@echo "${GREEN}Running containers: ${END}"
 	@docker ps -a
 	@echo "${GREEN}Existing docker images: ${END}"
 	@docker images 
 	
 up:
-	docker-compose -f $(COMPOSE) up -d
+	$(COMP_CMD) -f $(COMPOSE) up -d
 
 build:
 	docker build -f $(DOCKER_PATH) . -t $(APPNAME)
 
 down:
-	docker-compose -f $(COMPOSE) down
+	${COMP_CMD} -f $(COMPOSE) down
 
 delete: down
 	docker rm -fv $(CONTAINER)
@@ -53,7 +61,7 @@ delete: down
 #Check why delete cause error 
 
 exec:
-	docker exec -it ${CONTAINER} /bin/sh -c bash
+	docker exec -it $(CONTAINER) /bin/sh -c bash
 
 help:
 	@echo ""
