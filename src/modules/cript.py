@@ -32,16 +32,12 @@ def DecriptKey(usrPsswd):
 	return True
 
 def MasterKeyPass(usrPsswd):
-	print(usrPsswd)
 	psswdLen = len(usrPsswd)
 	if psswdLen < 16:
 		fillPsswd = usrPsswd.zfill(16 - psswdLen)
 	usrBytes = fillPsswd[:16]
-	print(usrBytes)
-	msg.debug_msg("last 16 bytes", usrPsswd[:16])
 	# Derivating key
 	kdf = PBKDF2HMAC (algorithm=hashes.SHA256(), length=32, salt=usrBytes, iterations=1000,)
 	key = base64.urlsafe_b64encode(kdf.derive(usrPsswd))
-	msg.debug_msg("key: ", key)
 	fer = Fernet(key)
 	return fer

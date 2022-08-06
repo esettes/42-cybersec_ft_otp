@@ -1,6 +1,6 @@
 # ft_otp / TOTP Generator
 
-Python implementation of an authenticator, similar to Google authenticator.
+Python implementation of a two factor authentication program.
 
 <br>
 

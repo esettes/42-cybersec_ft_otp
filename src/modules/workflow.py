@@ -12,10 +12,10 @@ def ChangePassword():
 	usrPsswd = getpass("Password: ")
 	if usrPsswd == 'c' or usrPsswd == 'C':
 		return False
-	if DecriptKey(usrPsswd.encode()):
+	if DecriptKey(usrPsswd.encode()) and CryptKey(usrPsswd.encode()):
 		newPsswd = NewPsswd()
 		if newPsswd != None:
-			if CryptKey(newPsswd.encode()):
+			if DecriptKey(usrPsswd.encode()) and CryptKey(newPsswd.encode()):
 				return True
 	else:
 		msg.err_msg("Incorrect password. Try again or press 'C' + [Enter] to cancel.")

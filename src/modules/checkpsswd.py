@@ -1,15 +1,26 @@
 import modules.stdmsg as msg
 from getpass import getpass
+from modules.cript import CryptKey, DecriptKey
+
+def RequirePsswd():
+	usrPsswd = getpass("Password: ")
+	if DecriptKey(usrPsswd.encode()):
+		CryptKey(usrPsswd.encode())
+		return True
+	elif usrPsswd == 'c' or usrPsswd == 'C':
+		return False
+	else:
+		msg.err_msg("Incorrect password. Try again or press 'C' + [Enter] to cancel.")
+		RequirePsswd()
+	return False
 
 def NewPsswd():
 	usrInput = getpass("Write a new password: ")
-	print("writed: " + usrInput)
 	if usrInput == 'c' or usrInput == 'C':
-		msg.load_msg("Canceled new key gen")
+		msg.load_msg("Canceled.")
 		return None
 	if CheckPsswdLength(usrInput):
 		usrCheck = getpass("Write the same password again: ")
-		print("writed: " + usrCheck)
 		if usrInput != usrCheck:
 			msg.err_msg("The passwords didn't match.Try again or press 'C' + [Enter] to cancel.")
 			NewPsswd()
