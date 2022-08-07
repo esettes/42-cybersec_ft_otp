@@ -2,8 +2,9 @@
 import hashlib
 import random, time, math, hmac
 
-def OTPgenerator(length):
+def OTPgenerator():
 	OTP = ""
+	length = 5
 	for i in range(length) :
 		OTP=OTP+str(random.choice(range(0,15)))
 		print(OTP)

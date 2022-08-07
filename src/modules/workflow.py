@@ -1,5 +1,5 @@
 from modules.globvars import keypath
-from modules.ft_otp import GenerateTOTP
+from modules.otpgen import GenerateTOTP
 from modules.checkpsswd import NewPsswd
 import modules.stdmsg as msg
 from modules.cript import CryptKey, DecriptKey

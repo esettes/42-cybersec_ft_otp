@@ -1,9 +1,11 @@
+#!/usr/bin/python3.9
+from getpass import getpass
 from modules.globvars import keypath
+import modules.stdmsg as msg
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-import modules.stdmsg as msg
-import base64
+import base64, sys
 
 def CryptKey(usrPsswd):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
@@ -37,7 +39,11 @@ def MasterKeyPass(usrPsswd):
 		fillPsswd = usrPsswd.zfill(16 - psswdLen)
 	usrBytes = fillPsswd[:16]
 	# Derivating key
-	kdf = PBKDF2HMAC (algorithm=hashes.SHA256(), length=32, salt=usrBytes, iterations=1000,)
+#	try:
+	kdf = PBKDF2HMAC (algorithm=hashes.SHA1(), length=32, salt=usrBytes, iterations=1000,)
 	key = base64.urlsafe_b64encode(kdf.derive(usrPsswd))
 	fer = Fernet(key)
 	return fer
+#	except Exception:
+#		msg.err_msg("Can't create key")
+#	return None
