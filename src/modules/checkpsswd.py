@@ -6,13 +6,13 @@ def RequirePsswd():
 	usrPsswd = getpass("Password: ")
 	if DecriptKey(usrPsswd.encode()):
 		CryptKey(usrPsswd.encode())
-		return True
+		return usrPsswd
 	elif usrPsswd == 'c' or usrPsswd == 'C':
-		return False
+		return None
 	else:
 		msg.err_msg("Incorrect password. Try again or press 'C' + [Enter] to cancel.")
 		RequirePsswd()
-	return False
+	return None
 
 def NewPsswd():
 	usrInput = getpass("Write a new password: ")
@@ -37,3 +37,16 @@ def CheckPsswdLength(psswd):
 		return False
 	else:
 		return True
+
+def GetDecriptedKey(keyfile):
+	try:
+		psswd = RequirePsswd()
+		if psswd != None:
+			DecriptKey(psswd)
+		with open(keyfile, 'rb') as o_file:
+			r_file = o_file.read()
+			print (r_file)
+			return r_file.encode()
+	except Exception:
+		print("fail")
+		

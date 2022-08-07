@@ -1,14 +1,12 @@
 #!/usr/bin/python3.9
 
-from base64 import b32decode, b32encode
-from struct import pack, unpack
-from hashlib import sha1
 import sys, argparse
 from modules.checkkey import ConfirmCreateNewKey
-from modules.checkpsswd import RequirePsswd
+from modules.cript import DecriptKey
 from modules.hexconversion import ConvertToHex
 from modules.workflow import ChangeMasterKey, ChangePassword, ObtainTOTP
 import modules.stdmsg as msg
+from modules.checkpsswd import RequirePsswd
 
 def	main(argv):
 	keysave = ""

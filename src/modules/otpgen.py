@@ -14,8 +14,8 @@ def OTPgenerator():
 def TruncateTOTP(totpHmac):
 	binConvert = bin(int(totpHmac.hexdigest(), base=16))
 	base10Ref = binConvert[-4:] # Last 4 bits like an integer reference
-	intRef = int(base10Ref, base=2)
-	get32Bits = binConvert[intRef * 8 : intRef * 8 + 32]
+	offset = int(base10Ref, base=2)
+	get32Bits = binConvert[offset * 8 : offset * 8 + 32]
 	totp = str(int(get32Bits, base=2))
 	return totp[-6:]
 
@@ -27,4 +27,5 @@ def GenerateTOTP(key):
 	totpHash = hmac.new(bytes(key, encoding="utf-8"),
 		totp.to_bytes(length=8, byteorder="big"),
 		hashlib.sha256, )
+	
 	return TruncateTOTP(totpHash)

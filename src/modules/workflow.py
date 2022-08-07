@@ -46,5 +46,8 @@ def ChangeMasterKey(key):
 	return False
 
 def ObtainTOTP(key):
-	totp = GenerateTOTP(key)
-	msg.info_msg(totp)
+	if DecriptKey(key):
+		totp = GenerateTOTP(key.encode())
+	if CryptKey(key):
+		msg.info_msg(totp)
+	
