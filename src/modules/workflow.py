@@ -9,7 +9,7 @@ from os.path import exists
 from modules.checkpsswd import CheckPsswdLength
 
 def ChangePassword():
-	usrPsswd = getpass("Password: ")
+	usrPsswd = str(getpass("Password: "))
 	if usrPsswd == 'c' or usrPsswd == 'C':
 		return False
 	if DecriptKey(usrPsswd.encode()) and CryptKey(usrPsswd.encode()):
@@ -24,7 +24,7 @@ def ChangePassword():
 
 def ChangeMasterKey(key):
 	if CheckValidKey(key):
-		usrPsswd = getpass("Password: ")
+		usrPsswd = str(getpass("Password: "))
 		if usrPsswd == 'c' or usrPsswd == 'C':
 			return False
 		if CheckPsswdLength(usrPsswd):
@@ -46,8 +46,8 @@ def ChangeMasterKey(key):
 	return False
 
 def ObtainTOTP(key):
-	usrPsswd = getpass("Password: ")
-	if DecriptKey(usrPsswd.encode()):
+	usrPsswd = str(getpass("Password: "))
+	if DecriptKey(bytes(usrPsswd, 'utf-8', errors='strict')):
 		print(key)
 		with open(key, 'r') as mykey:
 			readed = mykey.read()

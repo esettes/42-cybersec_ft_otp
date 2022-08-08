@@ -3,7 +3,7 @@ from getpass import getpass
 from modules.cript import CryptKey, DecriptKey
 
 def RequirePsswd():
-	usrPsswd = getpass("Password: ")
+	usrPsswd = str(getpass("Password: "))
 	if DecriptKey(usrPsswd.encode()):
 		CryptKey(usrPsswd.encode())
 		return usrPsswd.encode()
@@ -15,7 +15,7 @@ def RequirePsswd():
 	return None
 
 def NewPsswd():
-	usrInput = getpass("Write a new password: ")
+	usrInput = str(getpass("Write a new password: "))
 	if usrInput == 'c' or usrInput == 'C':
 		msg.load_msg("Canceled.")
 		return None

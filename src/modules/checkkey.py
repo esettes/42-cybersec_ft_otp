@@ -38,7 +38,7 @@ def WriteKey(key):
 def ConfirmCreateNewKey():
 	if os.path.exists(keypath):
 		msg.warn_msg("Another key exist. This action will overwrite it and is irreversible. Are you sure you want to overwrite it? [y/n] : ")
-		usrInput = input("")
+		usrInput = str(input(""))
 		if usrInput == 'n' or usrInput == 'N':
 			print("cancel key-gen and return program")
 			return False

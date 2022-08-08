@@ -1,6 +1,7 @@
 #!/usr/bin/python3.9
 import hashlib, binascii
 import random, time, math, hmac
+import modules.stdmsg as msg
 
 def OTPgenerator():
 	OTP = ""
@@ -21,9 +22,10 @@ def TruncateTOTP(totpHmac):
 
 
 def GenerateTOTP(key):
-	timeNow = math.floor(time.time())
+	timeNow = int(time.time())
 	timeAwait = 30
-	totp = math.floor(timeNow / timeAwait)
+	totp = int(timeNow / timeAwait)
+	msg.debug_msg("key ", key)
 	totpHash = hmac.new(binascii.unhexlify(key),
 		totp.to_bytes(length=8, byteorder="big"),
 		hashlib.sha256, )

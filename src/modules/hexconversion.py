@@ -6,8 +6,9 @@ def ConvertToHex_XXD(str):
 	print(hex_format)
 	return hex_format
 
-def ConvertToHex(str):
-	str_val = str.encode('utf-8')
+def ConvertToHex(mystr):
+	str_val = mystr.encode('utf-8', errors='strict')
+	print(str_val)
 	hex_val = binascii.hexlify(str_val).decode('utf-8')
 	hex_format = hex_val.strip()
 	print(hex_format)
