@@ -1,5 +1,5 @@
 #!/usr/bin/python3.9
-import hashlib
+import hashlib, binascii
 import random, time, math, hmac
 
 def OTPgenerator():
@@ -24,7 +24,7 @@ def GenerateTOTP(key):
 	timeNow = math.floor(time.time())
 	timeAwait = 30
 	totp = math.floor(timeNow / timeAwait)
-	totpHash = hmac.new(bytes(key, encoding="utf-8"),
+	totpHash = hmac.new(binascii.unhexlify(key),
 		totp.to_bytes(length=8, byteorder="big"),
 		hashlib.sha256, )
 	

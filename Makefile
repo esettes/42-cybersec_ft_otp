@@ -6,7 +6,7 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/08/03 19:17:15 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/08 12:11:05 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CONTAINER = otp_container
 
 all:	up	exec
 
-ifeq  ($(OS), Darwin)
+ifeq  ($(OS),Darwin)
 COMP_CMD = docker-compose
 COMPOSE = ./docker/docker-compose.yml
 else
@@ -40,7 +40,7 @@ list:
 	@echo "------------------------------"
 	@echo "${BLUE}Current compose images:"
 	@echo "----------------------------------------------"
-	@$(COMP_CMD) -f $(COMPOSE) images
+	$(COMP_CMD) -f $(COMPOSE) images
 	@echo "${GREEN}Running containers: ${END}"
 	@docker ps -a
 	@echo "${GREEN}Existing docker images: ${END}"

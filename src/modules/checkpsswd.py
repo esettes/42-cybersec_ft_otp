@@ -6,7 +6,7 @@ def RequirePsswd():
 	usrPsswd = getpass("Password: ")
 	if DecriptKey(usrPsswd.encode()):
 		CryptKey(usrPsswd.encode())
-		return usrPsswd
+		return usrPsswd.encode()
 	elif usrPsswd == 'c' or usrPsswd == 'C':
 		return None
 	else:
@@ -38,15 +38,4 @@ def CheckPsswdLength(psswd):
 	else:
 		return True
 
-def GetDecriptedKey(keyfile):
-	try:
-		psswd = RequirePsswd()
-		if psswd != None:
-			DecriptKey(psswd)
-		with open(keyfile, 'rb') as o_file:
-			r_file = o_file.read()
-			print (r_file)
-			return r_file.encode()
-	except Exception:
-		print("fail")
 		

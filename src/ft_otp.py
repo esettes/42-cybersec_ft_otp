@@ -32,9 +32,10 @@ def	main(argv):
 		else:
 			msg.load_msg("Abort password modification.")
 	if args.key != None and args.readablegen == None and args.generate == None:
-		if RequirePsswd():
-			ObtainTOTP(args.key)
+		ObtainTOTP(args.key)
 	return
+
+
 
 if __name__ == '__main__':
 	main(sys.argv)

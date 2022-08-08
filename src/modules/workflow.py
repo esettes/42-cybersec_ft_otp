@@ -46,8 +46,15 @@ def ChangeMasterKey(key):
 	return False
 
 def ObtainTOTP(key):
-	if DecriptKey(key):
-		totp = GenerateTOTP(key.encode())
-	if CryptKey(key):
-		msg.info_msg(totp)
+	usrPsswd = getpass("Password: ")
+	if DecriptKey(usrPsswd.encode()):
+		print(key)
+		with open(key, 'r') as mykey:
+			readed = mykey.read()
+			readed.strip()
+			print("mykey readed: ")
+			print(readed)
+			totp = GenerateTOTP(readed)
+		if CryptKey(usrPsswd.encode()):
+			msg.info_msg(totp)
 	
