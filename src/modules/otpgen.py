@@ -1,7 +1,7 @@
 #!/usr/bin/python3.9
 import hashlib, binascii
-import random, time, math, hmac
-import modules.stdmsg as msg
+import random, time, math, hmac, base64
+import modules.utils.stdmsg as msg
 
 def OTPgenerator():
 	OTP = ""
@@ -26,8 +26,14 @@ def GenerateTOTP(key):
 	timeAwait = 30
 	totp = int(timeNow / timeAwait)
 	msg.debug_msg("key ", key)
-	totpHash = hmac.new(binascii.unhexlify(key),
+	#unhex = KeyToBase64(key)
+	#msg.debug_msg("Unhex key: ", unhex)
+	totpHash = hmac.new(bytes(key, encoding='utf-8'),
 		totp.to_bytes(length=8, byteorder="big"),
-		hashlib.sha256, )
+		hashlib.sha1, )
 	
 	return TruncateTOTP(totpHash)
+
+def KeyToBase64(s):
+	byteSeq = binascii.unhexlify(s)
+	return base64.b32encode(byteSeq)

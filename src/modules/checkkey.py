@@ -1,6 +1,8 @@
-import modules.stdmsg as msg
+import modules.utils.stdmsg as msg
 import os.path
-from modules.globvars import keypath
+from modules.utils.globvars import keypath
+from modules.cript import MasterKeyPass
+from base64 import b32decode, b32encode
 
 def CheckValidKey(key):
 	formatCheck = CheckValidFormat(key)
@@ -27,8 +29,14 @@ def CheckValidFormat(key):
 		msg.err_msg('Key <' + key + '> is not correct formatted')
 		return False
 
-def WriteKey(key):
+def WriteKey(key, usrPsswd):
 	try:
+		#byteUsrPsswd = bytes(usrPsswd, 'utf-8')
+		#keyToWrite = b32encode(key.encode('utf-8'))
+		#print("key to write in writeKey")
+		#print(keyToWrite)
+		#masterkeyPsswd = MasterKeyPass(usrPsswd)
+		#crypt = masterkeyPsswd.encrypt(bytes.fromhex(key))
 		with open(keypath, "wb") as key_file:
 			key_file.write(key.encode())
 	except Exception:

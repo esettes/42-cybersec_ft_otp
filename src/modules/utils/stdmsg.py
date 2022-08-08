@@ -1,4 +1,4 @@
-from modules.bcolors import bcol
+from modules.utils.bcolors import bcol
 
 def	err_msg(s):
 	print (bcol.FAIL + "[ERROR]: " + bcol.ENDC + s)

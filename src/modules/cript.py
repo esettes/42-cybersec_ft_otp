@@ -1,17 +1,24 @@
 #!/usr/bin/python3.9
-from modules.globvars import keypath
+from modules.utils.globvars import keypath
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-import base64, os
+import os, base64
+from base64 import b32encode, b32decode
 
 
 def CryptKey(usrPsswd):
+	#byteUsrPsswd = bytes(usrPsswd, 'utf-8')
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
+	with open(keypath, 'rb') as mykey:
+		readed = mykey.read()
+		readed.strip()
+		#keyToWrite = b32encode(readed)#.encode('utf-8'))
+		crypt = masterkeyPsswd.encrypt(readed)
 	try:
-		with open(keypath, 'rb') as o_file:
-			r_file = o_file.read()
-			crypt = masterkeyPsswd.encrypt(r_file)
+		#with open(keypath, 'rb') as o_file:
+		#	r_file = o_file.read()
+		#	crypt = masterkeyPsswd.encrypt(r_file)
 		with open(keypath, 'wb') as crypt_file:
 			crypt_file.write(crypt)
 	except Exception:
@@ -20,6 +27,7 @@ def CryptKey(usrPsswd):
 	return True
 
 def DecriptKey(usrPsswd):
+	#byteUsrPsswd = bytes(usrPsswd, 'utf-8')
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
 		with open(keypath, 'rb') as o_file:
@@ -45,3 +53,4 @@ def MasterKeyPass(usrPsswd):
 #		msg.err_msg("Can't create key")
 #	return None
 
+# def MasterKeyVerify(usrPsswd):

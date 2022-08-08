@@ -1,4 +1,4 @@
-import modules.stdmsg as msg
+import modules.utils.stdmsg as msg
 from getpass import getpass
 from modules.cript import CryptKey, DecriptKey
 

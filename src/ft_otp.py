@@ -3,12 +3,14 @@
 import sys, argparse
 from modules.checkkey import ConfirmCreateNewKey
 from modules.cript import DecriptKey
-from modules.hexconversion import ConvertToHex
+from modules.utils.hexconversion import ConvertToHex
 from modules.workflow import ChangeMasterKey, ChangePassword, ObtainTOTP
-import modules.stdmsg as msg
+import modules.utils.stdmsg as msg
 from modules.checkpsswd import RequirePsswd
 
+
 def	main(argv):
+	
 	keysave = ""
 	parser = argparse.ArgumentParser(description="*** TOTP generator ***")
 	parser.add_argument('-g','--generate', metavar='<key>', default=None, help="[ -g <key> ] Recieves an hexadecimal key of at least 64 characters.")
@@ -20,9 +22,12 @@ def	main(argv):
 		if ConfirmCreateNewKey():
 			if args.generate != None and args.readablegen == None:
 				keysave = args.generate
+				
 			if args.generate == None and args.readablegen != None:
 				keysave = ConvertToHex(args.readablegen)
+				print(keysave)
 			if ChangeMasterKey(keysave):
+
 				msg.success_msg("Master key changed successfuly.")
 		else:
 			msg.load_msg("Abort master key modification.")
