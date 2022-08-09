@@ -1,5 +1,16 @@
 import time, hmac, hashlib, struct
 
+def GetDigits():
+	digits = 6
+	return digits
+
+def TimeAwait():
+	timeAwait = 30
+	return timeAwait
+
+def TimeNow():
+	t = int(time.time())
+	return t
 
 def GetTotpCounter():
 	timeNow = int(time.time())

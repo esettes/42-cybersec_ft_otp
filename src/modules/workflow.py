@@ -1,7 +1,5 @@
 from modules.utils.globvars import keypath
-from modules.otpgen import GenerateTOTP
 from modules.checkpsswd import NewPsswd, CheckPsswdLength
-from modules.utils.hexconversion import PrintOathtool
 import modules.utils.stdmsg as msg
 from modules.cript import CryptKey, DecriptKey
 from modules.checkkey import CheckValidKey, WriteKey
@@ -22,7 +20,6 @@ def ChangePassword():
 		msg.TryAgainPsswd()
 		ChangePassword()
 
-
 def ChangeMasterKey(key):
 	if CheckValidKey(key):
 		usrPsswd = str(getpass("Password: "))
@@ -42,15 +39,14 @@ def ChangeMasterKey(key):
 					msg.TryAgainPsswd()
 					ChangeMasterKey(key)
 		else:
-			print("Try again or press 'C' + [Enter] to cancel.")
+			msg.TryAgain()
 			ChangeMasterKey(key)
 	return False
 
-def ObtainTOTP(key):
+def ObtainTOTP(key, verb):
 	usrPsswd = str(getpass("Password: "))
 	try:
 		if DecriptKey(usrPsswd.encode()):
-			#print(key)
 			with open(key, 'r') as mykey:
 				readed = mykey.read()
 				#try:
@@ -59,6 +55,12 @@ def ObtainTOTP(key):
 					#msg.err_msg("Cant print oathtool")
 				totp = TruncateTOTP2(readed)
 				if CryptKey(usrPsswd.encode()):
-					msg.info_msg(totp)
+					try:
+						if verb:
+							msg.GUI_OTP(totp)
+						else:
+							msg.info_msg(totp)
+					except Exception:
+						print("Cant print")
 	except Exception:
 		msg.err_msg("Can't truncate TOTP")

@@ -9,6 +9,7 @@ class bcol:
 	FAIL = '\033[91m'
 	WARN = '\033[93m'
 	BLUE = '\033[94m'
+	BLUE_B = '\033[94m'
 	GREY = '\033[2m'
 	ENDC = '\033[0m'
 	CURSI = '\033[3m'

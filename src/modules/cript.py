@@ -1,11 +1,8 @@
-#!/usr/bin/python3.9
 from modules.utils.globvars import keypath
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-import os, base64
-from base64 import b32encode, b32decode
-
+import base64
 
 def CryptKey(usrPsswd):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
