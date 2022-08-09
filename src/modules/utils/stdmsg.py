@@ -18,3 +18,6 @@ def debug_msg(s, v):
 
 def info_msg(s):
 	print(bcol.BLUE + "* " + bcol.ENDC + s)
+
+def TryAgainPsswd():
+	err_msg("Incorrect password. Try again or press 'C' + [Enter] to cancel.")

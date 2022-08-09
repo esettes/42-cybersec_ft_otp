@@ -16,6 +16,6 @@ def ConvertToHex_HEXLIF(mystr):
 
 def PrintOathtool(k):
 	toprint = subprocess.run(["oathtool --totp"], stdout=subprocess.PIPE, text=True, input=k)
-	p = toprint.stdout.encode()
+	p = toprint.stdout
 
-	print("OATHTOOL: [ " + p.decode('utf-8') + " ]")
+	print("OATHTOOL: [ " + p + " ]")

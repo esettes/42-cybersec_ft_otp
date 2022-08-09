@@ -8,26 +8,19 @@ from base64 import b32encode, b32decode
 
 
 def CryptKey(usrPsswd):
-	#byteUsrPsswd = bytes(usrPsswd, 'utf-8')
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
-	with open(keypath, 'rb') as mykey:
-		readed = mykey.read()
-		readed.strip()
-		#keyToWrite = b32encode(readed)#.encode('utf-8'))
-		crypt = masterkeyPsswd.encrypt(readed)
 	try:
-		#with open(keypath, 'rb') as o_file:
-		#	r_file = o_file.read()
-		#	crypt = masterkeyPsswd.encrypt(r_file)
-		with open(keypath, 'wb') as crypt_file:
-			crypt_file.write(crypt)
+		with open(keypath, 'rb') as mykey:
+			readed = mykey.read()
+			crypt = masterkeyPsswd.encrypt(readed)
+			with open(keypath, 'wb') as crypt_file:
+				crypt_file.write(crypt)
 	except Exception:
 		#msg.err_msg("Couldn't encript key")
 		return False
 	return True
 
 def DecriptKey(usrPsswd):
-	#byteUsrPsswd = bytes(usrPsswd, 'utf-8')
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
 		with open(keypath, 'rb') as o_file:
@@ -41,8 +34,7 @@ def DecriptKey(usrPsswd):
 	return True
 
 def MasterKeyPass(usrPsswd):
-	salt = os.urandom(16)
-	salt = bytes.fromhex("6a38")
+	salt = bytes.fromhex("6a38bc83524782cd5ae1e09fdea31a2f")
 	# Derivating key
 #	try:
 	kdf = PBKDF2HMAC (algorithm=hashes.SHA256, length=32, salt=salt, iterations=39000,)
@@ -53,4 +45,3 @@ def MasterKeyPass(usrPsswd):
 #		msg.err_msg("Can't create key")
 #	return None
 
-# def MasterKeyVerify(usrPsswd):

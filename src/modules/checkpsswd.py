@@ -10,7 +10,7 @@ def RequirePsswd():
 	elif usrPsswd == 'c' or usrPsswd == 'C':
 		return None
 	else:
-		msg.err_msg("Incorrect password. Try again or press 'C' + [Enter] to cancel.")
+		msg.TryAgainPsswd()
 		RequirePsswd()
 	return None
 
@@ -22,7 +22,7 @@ def NewPsswd():
 	if CheckPsswdLength(usrInput):
 		usrCheck = getpass("Write the same password again: ")
 		if usrInput != usrCheck:
-			msg.err_msg("The passwords didn't match.Try again or press 'C' + [Enter] to cancel.")
+			msg.TryAgainPsswd()
 			NewPsswd()
 		elif usrInput == usrCheck:
 			return usrInput

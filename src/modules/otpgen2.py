@@ -1,22 +1,16 @@
-import base64, time, math, hmac, hashlib, binascii
-from hashlib import sha1
+import time, hmac, hashlib, struct
+
 
 def GetTotpCounter():
-	timeNow = math.floor(time.time())
+	timeNow = int(time.time())
 	timeAwait = 30
-	count = math.floor(timeNow / timeAwait)
-	return count.to_bytes(8, byteorder='big')
+	count = int(timeNow / timeAwait)
+	return struct.pack('>Q', count)
 
 def TruncateTOTP2(mykey):
-	print("keyyyyyy: ")
-	print(mykey)
-	#mykey = base64.b64decode(key)
-	
-	print(mykey)
 	counter = GetTotpCounter()
-	otpmac = hmac.new(binascii.hexlify(mykey), counter, hashlib.sha1).digest()
-	offset = otpmac[19] & 15
-	totp = str(int.from_bytes(otpmac[offset : offset + 4], 'big', signed=False))
+	otpmac = hmac.new(bytearray.fromhex(mykey), counter, hashlib.sha1).digest()
+	offset = otpmac[-1] & 15
+	totp = str(struct.unpack('>L', otpmac[offset : offset + 4])[0] & 0x7fffffff )
 	return totp[-6:]
 
-#def GenerateTOTP2(key):
