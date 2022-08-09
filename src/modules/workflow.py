@@ -1,6 +1,7 @@
 from modules.utils.globvars import keypath
 from modules.otpgen import GenerateTOTP
 from modules.checkpsswd import NewPsswd
+from modules.utils.hexconversion import PrintOathtool
 import modules.utils.stdmsg as msg
 from modules.cript import CryptKey, DecriptKey
 from modules.checkkey import CheckValidKey, WriteKey
@@ -58,7 +59,14 @@ def ObtainTOTP(key):
 			print("mykey readed: ")
 			print(readed)
 			#totp = GenerateTOTP(readed)
-			totp = TruncateTOTP2(readed)
+			try:
+				PrintOathtool(readed)
+			except Exception:
+				msg.err_msg("Cant print oathtool")
+			try:
+				totp = TruncateTOTP2(bytearray.fromhex(readed))
+			except Exception:
+				msg.err_msg("Can't truncate TOTP")
 			if CryptKey(usrPsswd.encode()):
 				msg.info_msg(totp)
 	
