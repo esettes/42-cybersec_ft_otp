@@ -1,8 +1,16 @@
 import argparse
+from argparse import RawTextHelpFormatter
 
 class OptArgs():
 	def __init__(self):
-		parser = argparse.ArgumentParser(description="*** TOTP generator ***")
+		head = """
+  _____ ___ _____ ____        ____            
+ |_   _/ _ |_   _|  _ \      / ___| ___ _ __  
+   | || | | || | | |_) _____| |  _ / _ | '_ \ 
+   | || |_| || | |  __|_____| |_| |  __| | | |
+   |_| \___/ |_| |_|         \____|\___|_| |_|
+	"""
+		parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter, description=head)
 		parser.add_argument('-g','--generate', metavar='<key>', default=None, help="[ -g <key> ] Recieves an hexadecimal key of at least 64 characters.")
 		parser.add_argument('-rg','--readablegen', metavar='<key>', default=None, help="[ -rg <key> ] Recieves a string with any characters and formats it to hexadecimal.")
 		parser.add_argument('-p','--passwd', action='store_true', help="[ -p ] Change the password.")

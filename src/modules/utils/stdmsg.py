@@ -1,6 +1,10 @@
+from os import system
 from modules.otpgen2 import GetDigits, TimeAwait
 from modules.utils.bcolors import bcol
 from datetime import datetime
+from base64 import b32encode
+from modules.otpgen2 import GetTotpCounter
+import time
 
 def	err_msg(s):
 	print (bcol.FAIL + "[ERROR]: " + bcol.ENDC + s)
@@ -27,7 +31,8 @@ def TryAgainPsswd():
 def TryAgain():
 	print("Try again or press 'C' + [Enter] to cancel.")
 
-def GUI_OTP(totp):
+def GUI_OTP(totp, mykey):
+	system("clear")
 	head = """
   _____ ___ _____ ____        ____            
  |_   _/ _ |_   _|  _ \      / ___| ___ _ __  
@@ -38,11 +43,18 @@ def GUI_OTP(totp):
 	print(bcol.BLUE + head + bcol.ENDC)
 	print(bcol.GREY + "author: iostancu" + bcol.ENDC)
 	print(bcol.BLUE + "----------------------------------------------" + bcol.ENDC)
-	print(bcol.GREY + "Digits: " + str(GetDigits()))
+	print(bcol.GREY + "Hex secret: " + mykey)
+	print("Base32 secret: " + b32encode(bytearray.fromhex(mykey)).decode('utf-8'))
+	print("Digits: " + str(GetDigits()))
+	print("TOTP model: SHA1")
 	print("Step size: " + str(TimeAwait()))
 	print("Start time: 1970/01/01, 00:00:00")
-	print("Current time: " + datetime.now().strftime("%m/%d/%Y, %H:%M:%S") + bcol.ENDC)
-	#print("Counter: " + GetTotpCounter().decode() )
+	print("Current time: " + datetime.now().strftime("%Y/%m/%d, %H:%M:%S") + bcol.ENDC)
+	#print("Counter: {} ({})".format(hex(GetTotpCounter().decode()),GetTotpCounter().decode()))
 	print(bcol.BLUE + "----------------------------------------------")
-	print("TOTP: " + bcol.ENDC + totp)
-	print(bcol.BLUE + "----------------------------------------------" + bcol.ENDC)
+	print("TOTP: \n" + bcol.ENDC + totp)
+	print(bcol.BLUE + "----------------------------------------------" )
+	print("OATHTOOL TOTP: " + bcol.ENDC)#,end = '')
+	system("oathtool --totp " + mykey)
+	print(bcol.BLUE + "----------------------------------------------\n" + bcol.ENDC)
+	

@@ -1,4 +1,4 @@
-from modules.utils.globvars import keypath
+
 from modules.checkpsswd import NewPsswd, CheckPsswdLength
 import modules.utils.stdmsg as msg
 from modules.cript import CryptKey, DecriptKey
@@ -13,34 +13,34 @@ def ChangePassword():
 		return False
 	if DecriptKey(usrPsswd.encode()) and CryptKey(usrPsswd.encode()):
 		newPsswd = NewPsswd()
-		if newPsswd != None:
+		if newPsswd != None and newPsswd != "":
 			if DecriptKey(usrPsswd.encode()) and CryptKey(newPsswd.encode()):
 				return True
 	else:
 		msg.TryAgainPsswd()
 		ChangePassword()
 
-def ChangeMasterKey(key):
-	if CheckValidKey(key):
+def ChangeMasterKey(object):
+	if CheckValidKey(object.get_key()):
 		usrPsswd = str(getpass("Password: "))
 		if usrPsswd == 'c' or usrPsswd == 'C':
 			return False
 		if CheckPsswdLength(usrPsswd):
-			if not exists(keypath):
-				WriteKey(key, usrPsswd)
+			if not exists(object.get_keypath()):
+				WriteKey(object)
 				if CryptKey(usrPsswd.encode()):
 					return True
-			elif exists(keypath):
+			elif exists(object.get_keypath()):
 				if DecriptKey(usrPsswd.encode()):
-					WriteKey(key, usrPsswd)
+					WriteKey(object)
 					if CryptKey(usrPsswd.encode()):
 						return True
 				else:
 					msg.TryAgainPsswd()
-					ChangeMasterKey(key)
+					ChangeMasterKey(object.get_key())
 		else:
 			msg.TryAgain()
-			ChangeMasterKey(key)
+			ChangeMasterKey(object.get_key())
 	return False
 
 def ObtainTOTP(key, verb):
@@ -57,7 +57,7 @@ def ObtainTOTP(key, verb):
 				if CryptKey(usrPsswd.encode()):
 					try:
 						if verb:
-							msg.GUI_OTP(totp)
+							msg.GUI_OTP(totp, readed)
 						else:
 							msg.info_msg(totp)
 					except Exception:
