@@ -1,9 +1,8 @@
 #!/usr/bin/python3.9
 
 import sys
-from modules.masterkey import MasterKey
+from modules.masterkey import MasterKey, default_keypath
 import modules.utils.arguments as optArgs
-from modules.masterkey import MasterKey
 from modules.utils.hexconversion import ConvertToHex
 from modules.workflow import ChangeMasterKey, ChangePassword, ObtainTOTP
 import modules.utils.stdmsg as msg
@@ -11,8 +10,10 @@ import modules.utils.stdmsg as msg
 def	main(argv):
 	myverbose = False
 	parse = optArgs.OptArgs()
-	mkey = MasterKey()
-
+	mkey = MasterKey("123456789", default_keypath)
+	#if mkey.get_keypath() == "":
+	#	mkey.set_keypath(default_keypath)
+	print (mkey.get_key())
 	if parse.args.verbose:
 		myverbose = True
 	if parse.args.generate or parse.args.readablegen:
@@ -21,6 +22,7 @@ def	main(argv):
 				mkey.set_key(parse.args.generate)
 			if parse.args.generate == None and parse.args.readablegen != None:
 				mkey.set_key(ConvertToHex(parse.args.readablegen))
+			print (mkey.get_key())
 			if ChangeMasterKey(mkey):
 				msg.success_msg("Master key changed successfuly.")
 		else:
@@ -31,7 +33,10 @@ def	main(argv):
 		else:
 			msg.load_msg("Abort password modification.")
 	if parse.args.key != None and parse.args.readablegen == None and parse.args.generate == None:
-		ObtainTOTP(parse.args.key, myverbose)
+		mkey.set_keypath(parse.args.key)
+		
+		print(mkey.get_keypath())
+		ObtainTOTP(mkey.get_keypath(), myverbose)
 	return
 
 if __name__ == '__main__':

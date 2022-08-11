@@ -4,7 +4,7 @@ global default_keypath
 default_keypath = "/home/modules/key/ft_opt.key"
 
 class MasterKey:
-	def __init__(self, k = "", keypath = default_keypath):
+	def __init__(self, k = "", keypath = ""):
 		self._key = k
 		self._keypath = keypath
 

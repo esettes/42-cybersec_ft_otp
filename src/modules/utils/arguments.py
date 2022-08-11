@@ -9,6 +9,17 @@ class OptArgs():
    | || | | || | | |_) _____| |  _ / _ | '_ \ 
    | || |_| || | |  __|_____| |_| |  __| | | |
    |_| \___/ |_| |_|         \____|\___|_| |_|
+
+Temporary one time password generator.
+
+------------------------------------------------
+Usually steps:
+\tCreate a master key:
+[ ./ft_otp -rg "My super secret master key 123456 super password" ]
+
+\tGenerate tot-password:
+[ ./ft_otp -k modules/key/ft_otp.key ]
+------------------------------------------------
 	"""
 		parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter, description=head)
 		parser.add_argument('-g','--generate', metavar='<key>', default=None, help="[ -g <key> ] Recieves an hexadecimal key of at least 64 characters.")

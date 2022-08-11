@@ -6,6 +6,7 @@ from modules.checkkey import CheckValidKey, WriteKey
 from getpass import getpass
 from os.path import exists
 from modules.otpgen2 import TruncateTOTP2
+from modules.masterkey import MasterKey
 
 def ChangePassword():
 	usrPsswd = str(getpass("Password: "))
@@ -37,22 +38,23 @@ def ChangeMasterKey(object):
 						return True
 				else:
 					msg.TryAgainPsswd()
-					ChangeMasterKey(object.get_key())
+					ChangeMasterKey(object)
 		else:
 			msg.TryAgain()
-			ChangeMasterKey(object.get_key())
-	return False
+			ChangeMasterKey(object)
+		return False
 
 def ObtainTOTP(key, verb):
+
+	try:
+		f = exists(object.get_keypath())
+	except Exception:
+		msg.err_msg("Can't find the file in " + key)
 	usrPsswd = str(getpass("Password: "))
 	try:
 		if DecriptKey(usrPsswd.encode()):
 			with open(key, 'r') as mykey:
 				readed = mykey.read()
-				#try:
-				#	PrintOathtool(readed)
-				#except Exception:
-					#msg.err_msg("Cant print oathtool")
 				totp = TruncateTOTP2(readed)
 				if CryptKey(usrPsswd.encode()):
 					try:
@@ -62,5 +64,11 @@ def ObtainTOTP(key, verb):
 							msg.info_msg(totp)
 					except Exception:
 						print("Cant print")
-	except Exception:
+				else:
+					msg.err_msg("Fail crypt")
+	except Exception as e:
+		print(e)
 		msg.err_msg("Can't truncate TOTP")
+	
+		
+		

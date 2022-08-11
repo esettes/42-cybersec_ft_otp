@@ -6,7 +6,7 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/08/08 12:11:05 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/11 22:50:14 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ up:
 
 build:
 	docker build -f $(DOCKER_PATH) . -t $(APPNAME)
+#	$(COMP_CMD) -f $(COMPOSE) up --build
 
 down:
 	${COMP_CMD} -f $(COMPOSE) down

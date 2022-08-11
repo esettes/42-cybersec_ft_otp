@@ -3,7 +3,8 @@ version: '3.3'
 services:
   otp:
     container_name: otp_container
-    image: docker_otp:latest
+    #image: docker_otp:latest
+    build: ./build/
     volumes:
       - ../src:/home
     stdin_open: true
