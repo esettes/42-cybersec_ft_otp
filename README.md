@@ -38,5 +38,12 @@ cd home
 ./totp_gen.py -rg "My super secret master secret key"
 ````
 
-...
+Put a password for generate a token to encript master key, and now we can create a temporary one time password. 
 
+## Generate temporary password
+
+With `-v` flag you turn on verbose mode, where shows generated password and the original tool "oathtool" that the password must match.
+
+````bash
+./totp_gen.py -k -v modules/key/ft_otp.key
+````
