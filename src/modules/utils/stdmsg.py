@@ -1,12 +1,8 @@
-from os import system
-from modules.otpgen2 import GetDigits, TimeAwait
 from modules.utils.bcolors import bcol
 from datetime import datetime
 from base64 import b32encode
-from modules.otpgen2 import GetTotpCounter
-import time
-import os
-#psutil
+from os import system
+from modules.otpgen2 import GetDigits, TimeAwait
 
 def	err_msg(s):
 	print (bcol.FAIL + "[ERROR]: " + bcol.ENDC + s)
@@ -30,9 +26,6 @@ def info_msg(s):
 def TryAgainPsswd():
 	err_msg("Incorrect password. Try again or press 'C' + [Enter] to cancel.")
 
-def TryAgain():
-	print("Try again or press 'C' + [Enter] to cancel.")
-
 def GUI_OTP(totp, mykey):
 	system("clear")
 	head = """
@@ -45,9 +38,7 @@ def GUI_OTP(totp, mykey):
 	print(bcol.BLUE + head + bcol.ENDC)
 	print(bcol.GREY + "author: iostancu" + bcol.ENDC)
 	print(bcol.BLUE + "----------------------------------------------" + bcol.ENDC)
-	print(bcol.GREY + "Hex secret: " + mykey )
-	print("\n Lenght: ")
-	print(len(mykey))
+	print(bcol.GREY + "Hex secret: " + mykey)
 	print("Base32 secret: " + b32encode(bytearray.fromhex(mykey)).decode('utf-8'))
 	print("Digits: " + str(GetDigits()))
 	print("TOTP model: SHA1")
@@ -61,7 +52,3 @@ def GUI_OTP(totp, mykey):
 	print("OATHTOOL TOTP: " + bcol.ENDC)#,end = '')
 	system("oathtool --totp " + mykey)
 	print(bcol.BLUE + "----------------------------------------------\n" + bcol.ENDC)
-	#process = psutil.Process(os.getpid())
-	#print(process.memory_info().rss)
-	#print(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
-	

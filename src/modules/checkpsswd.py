@@ -21,10 +21,11 @@ def NewPsswd():
 		return None
 	if CheckPsswdLength(usrInput):
 		usrCheck = getpass("Write the same password again: ")
-		if usrInput == usrCheck:
+		if usrInput != usrCheck:
+			msg.TryAgainPsswd()
+			NewPsswd()
+		elif usrInput == usrCheck:
 			return usrInput
-		msg.TryAgainPsswd()
-		NewPsswd()
 	else:
 		print("Try again or press 'C' + [Enter] to cancel.")
 		NewPsswd()

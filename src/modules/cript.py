@@ -1,17 +1,19 @@
-from modules.masterkey import default_keypath
+#!/usr/bin/python3.9
+from modules.utils.globvars import keypath
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
 import modules.utils.stdmsg as msg
 
+
 def CryptKey(usrPsswd):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
-		with open(default_keypath, 'rb') as mykey:
+		with open(keypath, 'rb') as mykey:
 			readed = mykey.read()
 			crypt = masterkeyPsswd.encrypt(readed)
-			with open(default_keypath, 'wb') as crypt_file:
+			with open(keypath, 'wb') as crypt_file:
 				crypt_file.write(crypt)
 	except Exception:
 		#msg.err_msg("Couldn't encript key")
@@ -21,10 +23,10 @@ def CryptKey(usrPsswd):
 def DecriptKey(usrPsswd):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
-		with open(default_keypath, 'rb') as o_file:
+		with open(keypath, 'rb') as o_file:
 			r_file = o_file.read()
 			decrypt = masterkeyPsswd.decrypt(r_file)
-			with open(default_keypath, 'wb') as crypt_file:
+			with open(keypath, 'wb') as crypt_file:
 				crypt_file.write(decrypt)
 	except Exception:
 		#msg.err_msg("Couldn't decript key")
