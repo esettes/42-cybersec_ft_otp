@@ -2,7 +2,7 @@ from modules.utils.bcolors import bcol
 from datetime import datetime
 from base64 import b32encode
 from os import system
-from modules.otpgen2 import GetDigits, TimeAwait
+from modules.generateotp import GetDigits, TimeAwait
 
 def	err_msg(s):
 	print (bcol.FAIL + "[ERROR]: " + bcol.ENDC + s)

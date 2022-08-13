@@ -1,4 +1,4 @@
-import subprocess, binascii
+import subprocess
 
 def ConvertToHex(mystr):
 	toHex = subprocess.run(["xxd", "-p"], stdout=subprocess.PIPE, text=True, input=mystr)

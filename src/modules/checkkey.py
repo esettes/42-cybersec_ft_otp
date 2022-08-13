@@ -1,6 +1,16 @@
 import modules.utils.stdmsg as msg
-import os.path
-from modules.utils.globvars import keypath
+global default_keypath
+default_keypath = '/home/ft_otp.key'
+
+import glob
+
+def KeyExist():
+	# glob to search sales.txt in account folder and all its subfolders
+	for file in glob.glob(r'/home/**/ft_otp.key', recursive=True):
+		if file:
+			return file
+		else:
+			return None
 
 def CheckValidKey(key):
 	formatCheck = CheckValidFormat(key)
@@ -26,16 +36,16 @@ def CheckValidFormat(key):
 	else:
 		return False
 
-def WriteKey(key, usrPsswd):
+def WriteKey(key, existing_key):
 	try:
-		with open(keypath, "wb") as key_file:
+		with open(existing_key, "wb") as key_file:
 			key_file.write(key.encode())
 	except Exception:
 		msg.err_msg("Fail to write key")
 		return
 
-def ConfirmCreateNewKey():
-	if os.path.exists(keypath):
+def ConfirmCreateNewKey(existing_key):
+	if existing_key != None:
 		msg.warn_msg("Another key exist. This action will overwrite it and is irreversible. Are you sure you want to overwrite it? [y/n] : ")
 		usrInput = str(input(""))
 		if usrInput == 'n' or usrInput == 'N':
@@ -44,5 +54,5 @@ def ConfirmCreateNewKey():
 			return True
 		else:
 			msg.err_msg("Please write 'y' or 'n'")
-			ConfirmCreateNewKey()
+			ConfirmCreateNewKey(existing_key)
 	return True

@@ -4,8 +4,7 @@ from modules.cript import CryptKey, DecriptKey
 
 def RequirePsswd():
 	usrPsswd = str(getpass("Password: "))
-	if DecriptKey(usrPsswd.encode()):
-		CryptKey(usrPsswd.encode())
+	if DecriptKey(usrPsswd.encode()) and CryptKey(usrPsswd.encode()):
 		return usrPsswd.encode()
 	elif usrPsswd == 'c' or usrPsswd == 'C':
 		return None
@@ -22,13 +21,10 @@ def NewPsswd():
 	if CheckPsswdLength(usrInput):
 		usrCheck = getpass("Write the same password again: ")
 		if usrInput != usrCheck:
-			msg.TryAgainPsswd()
-			NewPsswd()
+			msg.err_msg("Passwords must match.")
+			return None
 		elif usrInput == usrCheck:
 			return usrInput
-	else:
-		print("Try again or press 'C' + [Enter] to cancel.")
-		NewPsswd()
 	return None
 
 def CheckPsswdLength(psswd):
@@ -37,5 +33,3 @@ def CheckPsswdLength(psswd):
 		return False
 	else:
 		return True
-
-		

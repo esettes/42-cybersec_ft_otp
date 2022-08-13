@@ -1,5 +1,3 @@
-#!/usr/bin/python3.9
-from modules.utils.globvars import keypath
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -7,7 +5,7 @@ import base64
 import modules.utils.stdmsg as msg
 
 
-def CryptKey(usrPsswd):
+def CryptKey(usrPsswd, keypath):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
 		with open(keypath, 'rb') as mykey:
@@ -20,7 +18,7 @@ def CryptKey(usrPsswd):
 		return False
 	return True
 
-def DecriptKey(usrPsswd):
+def DecriptKey(usrPsswd, keypath):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
 		with open(keypath, 'rb') as o_file:

@@ -1,16 +1,16 @@
 #!/usr/bin/python3.9
 
 import sys, argparse
-from modules.checkkey import ConfirmCreateNewKey
+from modules.checkkey import ConfirmCreateNewKey, KeyExist
 from modules.utils.hexconversion import ConvertToHex
 from modules.workflow import ChangeMasterKey, ChangePassword, ObtainTOTP
 import modules.utils.stdmsg as msg
-from modules.utils.globvars import keypath
 from argparse import RawTextHelpFormatter
 
 def	main(argv):
 	
 	keysave = ""
+	existing_keypath = KeyExist()
 	myverbose = False
 	head = """
   _____ ___ _____ ____        ____            
@@ -26,7 +26,7 @@ Usually steps:
 [ ./ft_otp -rg "My super secret master key 123456 super password" ]
 
 \tGenerate tot-password:
-[ ./ft_otp -k modules/key/ft_otp.key ]
+[ ./ft_otp -k ft_otp.key ]
 ------------------------------------------------
 	"""
 	parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter, description=head)
@@ -39,29 +39,30 @@ Usually steps:
 	if args.verbose:
 		myverbose = True
 	if args.generate or args.readablegen:
-		if ConfirmCreateNewKey():
+		if ConfirmCreateNewKey(existing_keypath):
 			if args.generate != None and args.readablegen == None:
 				keysave = args.generate
 			if args.generate == None and args.readablegen != None:
 				keysave = ConvertToHex(args.readablegen)
 				print(keysave)
-			if ChangeMasterKey(keysave):
+			if ChangeMasterKey(keysave, existing_keypath):
 				msg.success_msg("Master key changed successfuly.")
 			else:
 				msg.err_msg("Can't change master key")
 		else:
 			msg.load_msg("Abort master key modification.")
 	if args.passwd:
-		if ChangePassword():
-			msg.success_msg("Password changed successfuly.")
+		if existing_keypath != None:
+			if ChangePassword(existing_keypath):
+				msg.success_msg("Password changed successfuly.")
+			else:
+				msg.load_msg("Abort password modification.")
 		else:
-			msg.load_msg("Abort password modification.")
+			msg.err_msg("Any password is set for any key. Create a master key before change password.")
 	if args.key != None and args.readablegen == None and args.generate == None:
-		if args.key == keypath or args.key == keypath[6:]:
-			ObtainTOTP(args.key, myverbose)
-		else:
-			msg.err_msg('No such file or directory in "' + args.key + '"')
-			print('Key would be in "modules/key/ft_otp.key"')
+
+		ObtainTOTP(args.key, myverbose)
+		
 	return
 
 
