@@ -6,11 +6,12 @@
 #    By: iostancu <iostancu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/28 19:11:33 by iostancu          #+#    #+#              #
-#    Updated: 2022/08/08 12:11:05 by iostancu         ###   ########.fr        #
+#    Updated: 2022/08/15 19:22:08 by iostancu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CYAN	=\033[1;36m
+LILA 	=\033[0;35m
 BLUE	=\033[1;34m
 GREEN	=\033[2;32m
 YELLOW	=\033[1;33m
@@ -23,24 +24,22 @@ OS	:=	$(shell uname -s)
 APPNAME = docker_otp:latest
 CONTAINER = otp_container
 
-
 all:	header up exec
-	
-info: header
 
 define HEADER
-─────▀▄▀─────▄─────▄
-──▄███████▄──▀██▄██▀
-▄█████▀█████▄──▄█
-███████▀████████▀
-─▄▄▄▄▄▄███████▀
-			
+
+           ▀▄▀     ▄     ▄
+        ▄███████▄  ▀██▄██▀
+      ▄█████▀█████▄  ▄█
+      ███████▀████████▀
+       ▄▄▄▄▄▄███████▀
+					
 endef
 export HEADER
 
 header:
-#clear
-	@echo "$$HEADER"
+	clear
+	@echo "$(BLUE)$$HEADER$(END)"
 
 ifeq  ($(OS),Darwin)
 COMP_CMD = docker-compose
@@ -51,26 +50,21 @@ COMPOSE = ./docker/docker-compose.yml
 endif
 
 list:
-	@echo "${CYAN}Current compose running containers:"
-	@echo "------------------------------"
-	$(COMP_CMD) -f $(COMPOSE) ps -a
-	@echo "------------------------------"
-	@echo "${BLUE}Current compose images:"
-	@echo "----------------------------------------------"
-	$(COMP_CMD) -f $(COMPOSE) images
-	@echo "${GREEN}Running containers: ${END}"
+	@echo "${BLUE}> Compose running containers: --------------------------"
+	@$(COMP_CMD) -f $(COMPOSE) ps -a
+	@echo "${LILA}> Running containers: \t--------------------------------${END}"
 	@docker ps -a
-	@echo "${GREEN}Existing docker images: ${END}"
+	@echo "${LILA}> Existing docker images: ------------------------------${END}"
 	@docker images 
 	
 up:
-	$(COMP_CMD) -f $(COMPOSE) up -d
+	@$(COMP_CMD) -f $(COMPOSE) up -d
 
 build:
-	docker build -f $(DOCKER_PATH) . -t $(APPNAME)
+	@docker build -f $(DOCKER_PATH) . -t $(APPNAME)
 
 down:
-	${COMP_CMD} -f $(COMPOSE) down
+	@${COMP_CMD} -f $(COMPOSE) down
 
 delete: down
 	docker rm -fv $(CONTAINER)
@@ -78,7 +72,7 @@ delete: down
 #Check why delete cause error 
 
 exec:
-	docker exec -it $(CONTAINER) /bin/sh -c bash
+	@docker exec -it $(CONTAINER) /bin/sh -c bash
 
 help:
 	@echo ""
@@ -90,7 +84,7 @@ help:
 	@echo "\t[ delete ] \tStop and delete containers and images."
 	@echo "\t[ build ] \tBuild the image."
 	@echo ""
-	@echo "\tA normal workflow would be: [ make build ] + [ make ] "
+	@echo "\tA normal workflow would be: [ make build ] + [ make ] "
 	@echo ""
 	@echo "\tThen you can [ make list ] to se all existing images and containers and"
-	@echo "\tto delete the images and containers related, execute [ make delete ] "
+	@echo "\tto delete the images and containers related, execute [ make delete ] "
