@@ -45,7 +45,7 @@ def ObtainTOTP(key, verb):
 		with open(key, 'r') as mykey:
 			readed = mykey.read()
 	except Exception:
-		msg.err_msg('No file found in this directory. Maybe the key is not correct named? (ft_otp.key)')
+		msg.err_msg('Key must be a file not a string.(ft_otp.key)')
 		return
 	usrPsswd = str(getpass("Password: "))
 	if DecriptKey(usrPsswd.encode(), key):
