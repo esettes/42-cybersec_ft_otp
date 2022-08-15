@@ -5,7 +5,6 @@ default_keypath = '/home/ft_otp.key'
 import glob
 
 def KeyExist():
-	# glob to search sales.txt in account folder and all its subfolders
 	for file in glob.glob(r'/home/**/ft_otp.key', recursive=True):
 		if file:
 			return file

@@ -23,7 +23,24 @@ OS	:=	$(shell uname -s)
 APPNAME = docker_otp:latest
 CONTAINER = otp_container
 
-all:	up	exec
+
+all:	header up exec
+	
+info: header
+
+define HEADER
+─────▀▄▀─────▄─────▄
+──▄███████▄──▀██▄██▀
+▄█████▀█████▄──▄█
+███████▀████████▀
+─▄▄▄▄▄▄███████▀
+			
+endef
+export HEADER
+
+header:
+#clear
+	@echo "$$HEADER"
 
 ifeq  ($(OS),Darwin)
 COMP_CMD = docker-compose
