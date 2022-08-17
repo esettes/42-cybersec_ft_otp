@@ -18,6 +18,7 @@ def CryptKey(usrPsswd, keypath):
 		return False
 	return True
 
+
 def DecriptKey(usrPsswd, keypath):
 	masterkeyPsswd = MasterKeyPass(usrPsswd)
 	try:
@@ -30,6 +31,7 @@ def DecriptKey(usrPsswd, keypath):
 		#msg.err_msg("Couldn't decript key")
 		return False
 	return True
+
 
 def MasterKeyPass(usrPsswd):
 	try:

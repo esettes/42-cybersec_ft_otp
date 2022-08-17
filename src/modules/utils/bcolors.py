@@ -1,4 +1,3 @@
-
 # B = Bright
 # L = Low
 

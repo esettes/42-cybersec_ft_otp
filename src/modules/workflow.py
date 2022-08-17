@@ -40,6 +40,7 @@ def ChangeMasterKey(key, existing_key):
 			return False
 	return False
 
+
 def ObtainTOTP(key, verb):
 	try:
 		with open(key, 'r') as mykey:

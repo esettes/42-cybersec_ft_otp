@@ -13,6 +13,7 @@ def RequirePsswd():
 		RequirePsswd()
 	return None
 
+
 def NewPsswd():
 	usrInput = str(getpass("Write a new password: "))
 	if usrInput == 'c' or usrInput == 'C':
@@ -26,6 +27,7 @@ def NewPsswd():
 		elif usrInput == usrCheck:
 			return usrInput
 	return None
+
 
 def CheckPsswdLength(psswd):
 	if len(psswd) < 6 or len(psswd) > 16:
